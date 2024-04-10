@@ -2,6 +2,7 @@
 
 
 #include "ShooterCharacter.h"
+#include <string>
 
 // Sets default values
 AShooterCharacter::AShooterCharacter()
@@ -15,7 +16,9 @@ AShooterCharacter::AShooterCharacter()
 void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	UE_LOG(LogTemp, Warning, TEXT("BeginPlay() called"));
+	std::wstring str(L"114514");
+	UE_LOG(LogTemp, Warning, TEXT("%s"), str.c_str());
 }
 
 // Called every frame
