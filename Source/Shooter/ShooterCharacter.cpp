@@ -31,6 +31,25 @@ void AShooterCharacter::BeginPlay()
 
 }
 
+void AShooterCharacter::MoveForward(float Value)
+{
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(Direction, Value);
+	//UE_LOG(LogTemp, Warning, TEXT("Moving forword or backword"));
+}
+//左右移动
+void AShooterCharacter::MoveRight(float Value)
+{
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Value);
+	//UE_LOG(LogTemp, Warning, TEXT("Moving left or right"));
+}
+
+
 // Called every frame
 void AShooterCharacter::Tick(float DeltaTime)
 {
@@ -42,5 +61,7 @@ void AShooterCharacter::Tick(float DeltaTime)
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	check(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &AShooterCharacter::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AShooterCharacter::MoveRight);
 }
